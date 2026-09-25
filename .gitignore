@@ -1,0 +1,54 @@
+# ==============================================================================
+# observability-sandboxes-aws-datadog — root .gitignore
+# Applies to every topic folder (a1-...  through a10-...), since patterns below
+# with no leading slash match at any depth in the repo.
+# ==============================================================================
+
+# --- Internal tags (see project plan: Tagging - Values & File Strategy) ---
+# Populated per-topic with the generic internal_tags map (owner/team/purpose,
+# or whatever keys you choose). Never committed — keeps both the tag values
+# AND the tag key names private, since this repo is public.
+tags.auto.tfvars
+
+# --- Terraform local state & working files ---
+# Not relevant here since every topic uses the HCP Terraform remote backend
+.terraform/
+.terraform.tfstate.lock.info
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# --- Terraform CLI credentials / crash logs ---
+.terraformrc
+terraform.rc
+crash.log
+crash.*.log
+
+# --- Terraform override files (used for local, temporary overrides) ---
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# --- Plan output files (if ever saved locally, e.g. `terraform plan -out=tfplan`) ---
+*.tfplan
+*.plan
+
+# --- Any other local/secret var files (defense in depth beyond tags.auto.tfvars) ---
+*.secret.tfvars
+secrets.auto.tfvars
+
+# --- OS-specific files ---
+.DS_Store
+Thumbs.db
+
+# --- Editor/IDE files ---
+.vscode/
+.idea/
+*.swp
+
+# ==============================================================================
+# NOTE: .terraform.lock.hcl is intentionally NOT ignored — it's a provider
+# dependency lock file and should be committed per Terraform's own guidance,
+# so anyone cloning a topic's folder gets the same provider versions.
+# ==============================================================================
